@@ -1,0 +1,771 @@
+Running update for http://github.com/cgrand/enlive.git on Sat Aug 21 17:00:41 MDT 2010
+-----------------------------------------
+Cloning repo... Clone of http://github.com/cgrand/enlive.git successful.
+Done.
+Building / Installing
+Created /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/85e4ed0d-e19f-488b-8f44-d57f9cde3c0d5486779364091802895/enlive/enlive-1.0.0-SNAPSHOT.jar
+Wrote pom.xml
+[INFO] Installing /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/85e4ed0d-e19f-488b-8f44-d57f9cde3c0d5486779364091802895/enlive/enlive-1.0.0-SNAPSHOT.jar to /Users/zkim/.m2/repository/enlive/enlive/1.0.0-SNAPSHOT/enlive-1.0.0-SNAPSHOT.jar
+
+
+
+Updating Dependencies.
+Copying 10 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/85e4ed0d-e19f-488b-8f44-d57f9cde3c0d5486779364091802895/temp-proj/lib
+Overriding previous definition of reference to cd-temp
+Overriding previous definition of reference to dependency.fileset
+Copying 3 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/85e4ed0d-e19f-488b-8f44-d57f9cde3c0d5486779364091802895/temp-proj/lib/dev
+
+
+
+Running import process.
+enlive :: Import Library Task
+=========================================
+  1 projects, 2 namespaces, 110 vars.
+  enlive                                                 (project)
+  net.cgrand.enlive-html                                 (ns) Ok
+  net.cgrand.xml                                         (ns) Ok
+  *self-closing-tags*                                    (var) Ok
+  add-class                                              (var) Ok
+  after                                                  (var) Ok
+  annotate                                               (var) Ok
+  any                                                    (var) Ok
+  any-node                                               (var) Ok
+  append                                                 (var) Ok
+  as-nodes                                               (var) Ok
+  at                                                     (var) Ok
+  at*                                                    (var) Ok
+  attr-contains                                          (var) Ok
+  attr-ends                                              (var) Ok
+  attr-has                                               (var) Ok
+  attr-starts                                            (var) Ok
+  attr-values                                            (var) Ok
+  attr=                                                  (var) Ok
+  attr?                                                  (var) Ok
+  attrs                                                  (var) Ok
+  attr|=                                                 (var) Ok
+  before                                                 (var) Ok
+  but                                                    (var) Ok
+  but-node                                               (var) Ok
+  cacheable                                              (var) Ok
+  cacheable?                                             (var) Ok
+  clone-for                                              (var) Ok
+  comment-node                                           (var) Ok
+  comment?                                               (var) Ok
+  content                                                (var) Ok
+  content                                                (var) Ok
+  defsnippet                                             (var) Ok
+  defsnippets                                            (var) Ok
+  deftemplate                                            (var) Ok
+  do->                                                   (var) Ok
+  document?                                              (var) Ok
+  element                                                (var) Ok
+  emit*                                                  (var) Ok
+  even                                                   (var) Ok
+  first-child                                            (var) Ok
+  first-of-type                                          (var) Ok
+  flatmap                                                (var) Ok
+  flatten-nodes-coll                                     (var) Ok
+  fragment-selector?                                     (var) Ok
+  get-resource                                           (var) Ok
+  has                                                    (var) Ok
+  has-class                                              (var) Ok
+  html-content                                           (var) Ok
+  html-resource                                          (var) Ok
+  html-snippet                                           (var) Ok
+  id=                                                    (var) Ok
+  intersection                                           (var) Ok
+  last-child                                             (var) Ok
+  last-of-type                                           (var) Ok
+  left                                                   (var) Ok
+  lefts                                                  (var) Ok
+  let-select                                             (var) Ok
+  lockstep-transform                                     (var) Ok
+  lockstep-transformation                                (var) Ok
+  move                                                   (var) Ok
+  node-selector?                                         (var) Ok
+  nth-child                                              (var) Ok
+  nth-last-child                                         (var) Ok
+  nth-last-of-type                                       (var) Ok
+  nth-of-type                                            (var) Ok
+  odd                                                    (var) Ok
+  only-child                                             (var) Ok
+  only-of-type                                           (var) Ok
+  parse                                                  (var) Ok
+  pred                                                   (var) Ok
+  prepend                                                (var) Ok
+  re-pred                                                (var) Ok
+  remove-attr                                            (var) Ok
+  remove-class                                           (var) Ok
+  right                                                  (var) Ok
+  rights                                                 (var) Ok
+  root                                                   (var) Ok
+  select                                                 (var) Ok
+  select-fragments*                                      (var) Ok
+  select-nodes*                                          (var) Ok
+  set-attr                                               (var) Ok
+  snippet                                                (var) Ok
+  snippet*                                               (var) Ok
+  sniptest                                               (var) Ok
+  sniptest*                                              (var) Ok
+  startparse-sax                                         (var) Ok
+  strict-mode                                            (var) Ok
+  strict-mode*                                           (var) Ok
+  substitute                                             (var) Ok
+  tag                                                    (var) Ok
+  tag=                                                   (var) Ok
+  tag?                                                   (var) Ok
+  template                                               (var) Ok
+  text                                                   (var) Ok
+  text-node                                              (var) Ok
+  text-pred                                              (var) Ok
+  texts                                                  (var) Ok
+  this-node                                              (var) Ok
+  transform                                              (var) Ok
+  transform-content                                      (var) Ok
+  transformation                                         (var) Ok
+  union                                                  (var) Ok
+  unwrap                                                 (var) Ok
+  void                                                   (var) Ok
+  whitespace                                             (var) Ok
+  wrap                                                   (var) Ok
+  xml-resource                                           (var) Ok
+  xml-zip                                                (var) Ok
+  zip-pred                                               (var) Ok
+  zip-select                                             (var) Ok
+  zip-select-fragments*                                  (var) Ok
+  zip-select-nodes*                                      (var) Ok
+  *self-closing-tags*                                    (0 references) Ok
+  add-class                                              (6 references) Ok
+  after                                                  (2 references) Ok
+  annotate                                               (5 references) Ok
+  any                                                    (1 references) Ok
+  any-node                                               (1 references) Ok
+  append                                                 (3 references) Ok
+  as-nodes                                               (1 references) Ok
+  at                                                     (8 references) Ok
+  at*                                                    (3 references) Ok
+  attr-contains                                          (0 references) Ok
+  attr-ends                                              (0 references) Ok
+  attr-has                                               (3 references) Ok
+  attr-starts                                            (0 references) Ok
+  attr-values                                            (4 references) Ok
+  attr=                                                  (1 references) Ok
+  attr?                                                  (5 references) Ok
+  attrs                                                  (1 references) Ok
+  attr|=                                                 (0 references) Ok
+  before                                                 (2 references) Ok
+  but                                                    (1 references) Ok
+  but-node                                               (2 references) Ok
+  cacheable                                              (3 references) Ok
+  cacheable?                                             (3 references) Ok
+  clone-for                                              (8 references) Ok
+  comment-node                                           (0 references) Ok
+  comment?                                               (2 references) Ok
+  content                                                (2 references) Ok
+  content                                                (1 references) Ok
+  defsnippet                                             (5 references) Ok
+  defsnippets                                            (10 references) Ok
+  deftemplate                                            (5 references) Ok
+  do->                                                   (3 references) Ok
+  document?                                              (2 references) Ok
+  element                                                (1 references) Ok
+  emit*                                                  (1 references) Ok
+  even                                                   (0 references) Ok
+  first-child                                            (0 references) Ok
+  first-of-type                                          (0 references) Ok
+  flatmap                                                (2 references) Ok
+  flatten-nodes-coll                                     (2 references) Ok
+  fragment-selector?                                     (2 references) Ok
+  get-resource                                           (3 references) Ok
+  has                                                    (1 references) Ok
+  has-class                                              (2 references) Ok
+  html-content                                           (3 references) Ok
+  html-resource                                          (1 references) Ok
+  html-snippet                                           (5 references) Ok
+  id=                                                    (3 references) Ok
+  intersection                                           (9 references) Ok
+  last-child                                             (0 references) Ok
+  last-of-type                                           (0 references) Ok
+  left                                                   (3 references) Ok
+  lefts                                                  (3 references) Ok
+  let-select                                             (10 references) Ok
+  lockstep-transform                                     (2 references) Ok
+  lockstep-transformation                                (9 references) Ok
+  move                                                   (4 references) Ok
+  node-selector?                                         (2 references) Ok
+  nth-child                                              (1 references) Ok
+  nth-last-child                                         (1 references) Ok
+  nth-last-of-type                                       (1 references) Ok
+  nth-of-type                                            (1 references) Ok
+  odd                                                    (0 references) Ok
+  only-child                                             (0 references) Ok
+  only-of-type                                           (0 references) Ok
+  parse                                                  (9 references) Ok
+  pred                                                   (1 references) Ok
+  prepend                                                (3 references) Ok
+  re-pred                                                (2 references) Ok
+  remove-attr                                            (4 references) Ok
+  remove-class                                           (3 references) Ok
+  right                                                  (3 references) Ok
+  rights                                                 (3 references) Ok
+  root                                                   (2 references) Ok
+  select                                                 (2 references) Ok
+  select-fragments*                                      (3 references) Ok
+  select-nodes*                                          (3 references) Ok
+  set-attr                                               (3 references) Ok
+  snippet                                                (4 references) Ok
+  snippet*                                               (9 references) Ok
+  sniptest                                               (4 references) Ok
+  sniptest*                                              (3 references) Ok
+  startparse-sax                                         (3 references) Ok
+  strict-mode                                            (4 references) Ok
+  strict-mode*                                           (0 references) Ok
+  substitute                                             (2 references) Ok
+  tag                                                    (1 references) Ok
+  tag=                                                   (2 references) Ok
+  tag?                                                   (0 references) Ok
+  template                                               (5 references) Ok
+  text                                                   (6 references) Ok
+  text-node                                              (1 references) Ok
+  text-pred                                              (4 references) Ok
+  texts                                                  (2 references) Ok
+  this-node                                              (0 references) Ok
+  transform                                              (4 references) Ok
+  transform-content                                      (9 references) Ok
+  transformation                                         (8 references) Ok
+  union                                                  (9 references) Ok
+  unwrap                                                 (0 references) Ok
+  void                                                   (2 references) Ok
+  whitespace                                             (0 references) Ok
+  wrap                                                   (2 references) Ok
+  xml-resource                                           (1 references) Ok
+  xml-zip                                                (5 references) Ok
+  zip-pred                                               (2 references) Ok
+  zip-select                                             (2 references) Ok
+  zip-select-fragments*                                  (2 references) Ok
+  zip-select-nodes*                                      (3 references) Ok
+  Looking for vars to remove...
+    No vars removed.
+=========================================
+  1 projects, 2 namespaces, 110 vars found in enlive
+  Took 10.973s
+
+
+
+-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Running update for http://github.com/cgrand/enlive.git on Sat Aug 21 17:01:25 MDT 2010
+-----------------------------------------
+Cloning repo... Clone of http://github.com/cgrand/enlive.git successful.
+Done.
+Building / Installing
+Created /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/ef9c6dbe-f5a0-4860-938e-38aafa20c1e02415698526588195303/enlive/enlive-1.0.0-SNAPSHOT.jar
+Wrote pom.xml
+[INFO] Installing /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/ef9c6dbe-f5a0-4860-938e-38aafa20c1e02415698526588195303/enlive/enlive-1.0.0-SNAPSHOT.jar to /Users/zkim/.m2/repository/enlive/enlive/1.0.0-SNAPSHOT/enlive-1.0.0-SNAPSHOT.jar
+
+
+
+Updating Dependencies.
+Copying 10 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/ef9c6dbe-f5a0-4860-938e-38aafa20c1e02415698526588195303/temp-proj/lib
+Overriding previous definition of reference to cd-temp
+Overriding previous definition of reference to dependency.fileset
+Copying 3 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/ef9c6dbe-f5a0-4860-938e-38aafa20c1e02415698526588195303/temp-proj/lib/dev
+
+
+
+Running import process.
+enlive :: Import Library Task
+=========================================
+  1 projects, 2 namespaces, 110 vars.
+  enlive                                                 (project)
+  net.cgrand.enlive-html                                 (ns) Ok
+  net.cgrand.xml                                         (ns) Ok
+  *self-closing-tags*                                    (var) Ok
+  add-class                                              (var) Ok
+  after                                                  (var) Ok
+  annotate                                               (var) Ok
+  any                                                    (var) Ok
+  any-node                                               (var) Ok
+  append                                                 (var) Ok
+  as-nodes                                               (var) Ok
+  at                                                     (var) Ok
+  at*                                                    (var) Ok
+  attr-contains                                          (var) Ok
+  attr-ends                                              (var) Ok
+  attr-has                                               (var) Ok
+  attr-starts                                            (var) Ok
+  attr-values                                            (var) Ok
+  attr=                                                  (var) Ok
+  attr?                                                  (var) Ok
+  attrs                                                  (var) Ok
+  attr|=                                                 (var) Ok
+  before                                                 (var) Ok
+  but                                                    (var) Ok
+  but-node                                               (var) Ok
+  cacheable                                              (var) Ok
+  cacheable?                                             (var) Ok
+  clone-for                                              (var) Ok
+  comment-node                                           (var) Ok
+  comment?                                               (var) Ok
+  content                                                (var) Ok
+  content                                                (var) Ok
+  defsnippet                                             (var) Ok
+  defsnippets                                            (var) Ok
+  deftemplate                                            (var) Ok
+  do->                                                   (var) Ok
+  document?                                              (var) Ok
+  element                                                (var) Ok
+  emit*                                                  (var) Ok
+  even                                                   (var) Ok
+  first-child                                            (var) Ok
+  first-of-type                                          (var) Ok
+  flatmap                                                (var) Ok
+  flatten-nodes-coll                                     (var) Ok
+  fragment-selector?                                     (var) Ok
+  get-resource                                           (var) Ok
+  has                                                    (var) Ok
+  has-class                                              (var) Ok
+  html-content                                           (var) Ok
+  html-resource                                          (var) Ok
+  html-snippet                                           (var) Ok
+  id=                                                    (var) Ok
+  intersection                                           (var) Ok
+  last-child                                             (var) Ok
+  last-of-type                                           (var) Ok
+  left                                                   (var) Ok
+  lefts                                                  (var) Ok
+  let-select                                             (var) Ok
+  lockstep-transform                                     (var) Ok
+  lockstep-transformation                                (var) Ok
+  move                                                   (var) Ok
+  node-selector?                                         (var) Ok
+  nth-child                                              (var) Ok
+  nth-last-child                                         (var) Ok
+  nth-last-of-type                                       (var) Ok
+  nth-of-type                                            (var) Ok
+  odd                                                    (var) Ok
+  only-child                                             (var) Ok
+  only-of-type                                           (var) Ok
+  parse                                                  (var) Ok
+  pred                                                   (var) Ok
+  prepend                                                (var) Ok
+  re-pred                                                (var) Ok
+  remove-attr                                            (var) Ok
+  remove-class                                           (var) Ok
+  right                                                  (var) Ok
+  rights                                                 (var) Ok
+  root                                                   (var) Ok
+  select                                                 (var) Ok
+  select-fragments*                                      (var) Ok
+  select-nodes*                                          (var) Ok
+  set-attr                                               (var) Ok
+  snippet                                                (var) Ok
+  snippet*                                               (var) Ok
+  sniptest                                               (var) Ok
+  sniptest*                                              (var) Ok
+  startparse-sax                                         (var) Ok
+  strict-mode                                            (var) Ok
+  strict-mode*                                           (var) Ok
+  substitute                                             (var) Ok
+  tag                                                    (var) Ok
+  tag=                                                   (var) Ok
+  tag?                                                   (var) Ok
+  template                                               (var) Ok
+  text                                                   (var) Ok
+  text-node                                              (var) Ok
+  text-pred                                              (var) Ok
+  texts                                                  (var) Ok
+  this-node                                              (var) Ok
+  transform                                              (var) Ok
+  transform-content                                      (var) Ok
+  transformation                                         (var) Ok
+  union                                                  (var) Ok
+  unwrap                                                 (var) Ok
+  void                                                   (var) Ok
+  whitespace                                             (var) Ok
+  wrap                                                   (var) Ok
+  xml-resource                                           (var) Ok
+  xml-zip                                                (var) Ok
+  zip-pred                                               (var) Ok
+  zip-select                                             (var) Ok
+  zip-select-fragments*                                  (var) Ok
+  zip-select-nodes*                                      (var) Ok
+  *self-closing-tags*                                    (0 references) Ok
+  add-class                                              (6 references) Ok
+  after                                                  (2 references) Ok
+  annotate                                               (5 references) Ok
+  any                                                    (1 references) Ok
+  any-node                                               (1 references) Ok
+  append                                                 (3 references) Ok
+  as-nodes                                               (1 references) Ok
+  at                                                     (8 references) Ok
+  at*                                                    (3 references) Ok
+  attr-contains                                          (0 references) Ok
+  attr-ends                                              (0 references) Ok
+  attr-has                                               (3 references) Ok
+  attr-starts                                            (0 references) Ok
+  attr-values                                            (4 references) Ok
+  attr=                                                  (1 references) Ok
+  attr?                                                  (5 references) Ok
+  attrs                                                  (1 references) Ok
+  attr|=                                                 (0 references) Ok
+  before                                                 (2 references) Ok
+  but                                                    (1 references) Ok
+  but-node                                               (2 references) Ok
+  cacheable                                              (3 references) Ok
+  cacheable?                                             (3 references) Ok
+  clone-for                                              (8 references) Ok
+  comment-node                                           (0 references) Ok
+  comment?                                               (2 references) Ok
+  content                                                (2 references) Ok
+  content                                                (1 references) Ok
+  defsnippet                                             (5 references) Ok
+  defsnippets                                            (10 references) Ok
+  deftemplate                                            (5 references) Ok
+  do->                                                   (3 references) Ok
+  document?                                              (2 references) Ok
+  element                                                (1 references) Ok
+  emit*                                                  (1 references) Ok
+  even                                                   (0 references) Ok
+  first-child                                            (0 references) Ok
+  first-of-type                                          (0 references) Ok
+  flatmap                                                (2 references) Ok
+  flatten-nodes-coll                                     (2 references) Ok
+  fragment-selector?                                     (2 references) Ok
+  get-resource                                           (3 references) Ok
+  has                                                    (1 references) Ok
+  has-class                                              (2 references) Ok
+  html-content                                           (3 references) Ok
+  html-resource                                          (1 references) Ok
+  html-snippet                                           (5 references) Ok
+  id=                                                    (3 references) Ok
+  intersection                                           (9 references) Ok
+  last-child                                             (0 references) Ok
+  last-of-type                                           (0 references) Ok
+  left                                                   (3 references) Ok
+  lefts                                                  (3 references) Ok
+  let-select                                             (10 references) Ok
+  lockstep-transform                                     (2 references) Ok
+  lockstep-transformation                                (9 references) Ok
+  move                                                   (4 references) Ok
+  node-selector?                                         (2 references) Ok
+  nth-child                                              (1 references) Ok
+  nth-last-child                                         (1 references) Ok
+  nth-last-of-type                                       (1 references) Ok
+  nth-of-type                                            (1 references) Ok
+  odd                                                    (0 references) Ok
+  only-child                                             (0 references) Ok
+  only-of-type                                           (0 references) Ok
+  parse                                                  (9 references) Ok
+  pred                                                   (1 references) Ok
+  prepend                                                (3 references) Ok
+  re-pred                                                (2 references) Ok
+  remove-attr                                            (4 references) Ok
+  remove-class                                           (3 references) Ok
+  right                                                  (3 references) Ok
+  rights                                                 (3 references) Ok
+  root                                                   (2 references) Ok
+  select                                                 (2 references) Ok
+  select-fragments*                                      (3 references) Ok
+  select-nodes*                                          (3 references) Ok
+  set-attr                                               (3 references) Ok
+  snippet                                                (4 references) Ok
+  snippet*                                               (9 references) Ok
+  sniptest                                               (4 references) Ok
+  sniptest*                                              (3 references) Ok
+  startparse-sax                                         (3 references) Ok
+  strict-mode                                            (4 references) Ok
+  strict-mode*                                           (0 references) Ok
+  substitute                                             (2 references) Ok
+  tag                                                    (1 references) Ok
+  tag=                                                   (2 references) Ok
+  tag?                                                   (0 references) Ok
+  template                                               (5 references) Ok
+  text                                                   (6 references) Ok
+  text-node                                              (1 references) Ok
+  text-pred                                              (4 references) Ok
+  texts                                                  (2 references) Ok
+  this-node                                              (0 references) Ok
+  transform                                              (4 references) Ok
+  transform-content                                      (9 references) Ok
+  transformation                                         (8 references) Ok
+  union                                                  (9 references) Ok
+  unwrap                                                 (0 references) Ok
+  void                                                   (2 references) Ok
+  whitespace                                             (0 references) Ok
+  wrap                                                   (2 references) Ok
+  xml-resource                                           (1 references) Ok
+  xml-zip                                                (5 references) Ok
+  zip-pred                                               (2 references) Ok
+  zip-select                                             (2 references) Ok
+  zip-select-fragments*                                  (2 references) Ok
+  zip-select-nodes*                                      (3 references) Ok
+  Looking for vars to remove...
+    No vars removed.
+=========================================
+  1 projects, 2 namespaces, 110 vars found in enlive
+  Took 11.302s
+
+
+
+-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Running update for http://github.com/cgrand/enlive.git on Sat Aug 21 17:11:17 MDT 2010
+-----------------------------------------
+Cloning repo... Clone of http://github.com/cgrand/enlive.git successful.
+Done.
+Building / Installing
+Created /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/0b6f78a4-e08b-459c-a74e-6e06570ae5042987091527333013124/enlive/enlive-1.0.0-SNAPSHOT.jar
+Wrote pom.xml
+[INFO] Installing /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/0b6f78a4-e08b-459c-a74e-6e06570ae5042987091527333013124/enlive/enlive-1.0.0-SNAPSHOT.jar to /Users/zkim/.m2/repository/enlive/enlive/1.0.0-SNAPSHOT/enlive-1.0.0-SNAPSHOT.jar
+
+
+
+Updating Dependencies.
+Copying 10 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/0b6f78a4-e08b-459c-a74e-6e06570ae5042987091527333013124/temp-proj/lib
+Overriding previous definition of reference to cd-temp
+Overriding previous definition of reference to dependency.fileset
+Copying 3 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/0b6f78a4-e08b-459c-a74e-6e06570ae5042987091527333013124/temp-proj/lib/dev
+
+
+
+Running import process.
+enlive :: Import Library Task
+=========================================
+  1 projects, 2 namespaces, 110 vars.
+  enlive                                                 (project)
+  net.cgrand.enlive-html                                 (ns) Ok
+  net.cgrand.xml                                         (ns) Ok
+  *self-closing-tags*                                    (var) Ok
+  add-class                                              (var) Ok
+  after                                                  (var) Ok
+  annotate                                               (var) Ok
+  any                                                    (var) Ok
+  any-node                                               (var) Ok
+  append                                                 (var) Ok
+  as-nodes                                               (var) Ok
+  at                                                     (var) Ok
+  at*                                                    (var) Ok
+  attr-contains                                          (var) Ok
+  attr-ends                                              (var) Ok
+  attr-has                                               (var) Ok
+  attr-starts                                            (var) Ok
+  attr-values                                            (var) Ok
+  attr=                                                  (var) Ok
+  attr?                                                  (var) Ok
+  attrs                                                  (var) Ok
+  attr|=                                                 (var) Ok
+  before                                                 (var) Ok
+  but                                                    (var) Ok
+  but-node                                               (var) Ok
+  cacheable                                              (var) Ok
+  cacheable?                                             (var) Ok
+  clone-for                                              (var) Ok
+  comment-node                                           (var) Ok
+  comment?                                               (var) Ok
+  content                                                (var) Ok
+  content                                                (var) Ok
+  defsnippet                                             (var) Ok
+  defsnippets                                            (var) Ok
+  deftemplate                                            (var) Ok
+  do->                                                   (var) Ok
+  document?                                              (var) Ok
+  element                                                (var) Ok
+  emit*                                                  (var) Ok
+  even                                                   (var) Ok
+  first-child                                            (var) Ok
+  first-of-type                                          (var) Ok
+  flatmap                                                (var) Ok
+  flatten-nodes-coll                                     (var) Ok
+  fragment-selector?                                     (var) Ok
+  get-resource                                           (var) Ok
+  has                                                    (var) Ok
+  has-class                                              (var) Ok
+  html-content                                           (var) Ok
+  html-resource                                          (var) Ok
+  html-snippet                                           (var) Ok
+  id=                                                    (var) Ok
+  intersection                                           (var) Ok
+  last-child                                             (var) Ok
+  last-of-type                                           (var) Ok
+  left                                                   (var) Ok
+  lefts                                                  (var) Ok
+  let-select                                             (var) Ok
+  lockstep-transform                                     (var) Ok
+  lockstep-transformation                                (var) Ok
+  move                                                   (var) Ok
+  node-selector?                                         (var) Ok
+  nth-child                                              (var) Ok
+  nth-last-child                                         (var) Ok
+  nth-last-of-type                                       (var) Ok
+  nth-of-type                                            (var) Ok
+  odd                                                    (var) Ok
+  only-child                                             (var) Ok
+  only-of-type                                           (var) Ok
+  parse                                                  (var) Ok
+  pred                                                   (var) Ok
+  prepend                                                (var) Ok
+  re-pred                                                (var) Ok
+  remove-attr                                            (var) Ok
+  remove-class                                           (var) Ok
+  right                                                  (var) Ok
+  rights                                                 (var) Ok
+  root                                                   (var) Ok
+  select                                                 (var) Ok
+  select-fragments*                                      (var) Ok
+  select-nodes*                                          (var) Ok
+  set-attr                                               (var) Ok
+  snippet                                                (var) Ok
+  snippet*                                               (var) Ok
+  sniptest                                               (var) Ok
+  sniptest*                                              (var) Ok
+  startparse-sax                                         (var) Ok
+  strict-mode                                            (var) Ok
+  strict-mode*                                           (var) Ok
+  substitute                                             (var) Ok
+  tag                                                    (var) Ok
+  tag=                                                   (var) Ok
+  tag?                                                   (var) Ok
+  template                                               (var) Ok
+  text                                                   (var) Ok
+  text-node                                              (var) Ok
+  text-pred                                              (var) Ok
+  texts                                                  (var) Ok
+  this-node                                              (var) Ok
+  transform                                              (var) Ok
+  transform-content                                      (var) Ok
+  transformation                                         (var) Ok
+  union                                                  (var) Ok
+  unwrap                                                 (var) Ok
+  void                                                   (var) Ok
+  whitespace                                             (var) Ok
+  wrap                                                   (var) Ok
+  xml-resource                                           (var) Ok
+  xml-zip                                                (var) Ok
+  zip-pred                                               (var) Ok
+  zip-select                                             (var) Ok
+  zip-select-fragments*                                  (var) Ok
+  zip-select-nodes*                                      (var) Ok
+  *self-closing-tags*                                    (0 references) Ok
+  add-class                                              (6 references) Ok
+  after                                                  (2 references) Ok
+  annotate                                               (5 references) Ok
+  any                                                    (1 references) Ok
+  any-node                                               (1 references) Ok
+  append                                                 (3 references) Ok
+  as-nodes                                               (1 references) Ok
+  at                                                     (8 references) Ok
+  at*                                                    (3 references) Ok
+  attr-contains                                          (0 references) Ok
+  attr-ends                                              (0 references) Ok
+  attr-has                                               (3 references) Ok
+  attr-starts                                            (0 references) Ok
+  attr-values                                            (4 references) Ok
+  attr=                                                  (1 references) Ok
+  attr?                                                  (5 references) Ok
+  attrs                                                  (1 references) Ok
+  attr|=                                                 (0 references) Ok
+  before                                                 (2 references) Ok
+  but                                                    (1 references) Ok
+  but-node                                               (2 references) Ok
+  cacheable                                              (3 references) Ok
+  cacheable?                                             (3 references) Ok
+  clone-for                                              (8 references) Ok
+  comment-node                                           (0 references) Ok
+  comment?                                               (2 references) Ok
+  content                                                (2 references) Ok
+  content                                                (1 references) Ok
+  defsnippet                                             (5 references) Ok
+  defsnippets                                            (10 references) Ok
+  deftemplate                                            (5 references) Ok
+  do->                                                   (3 references) Ok
+  document?                                              (2 references) Ok
+  element                                                (1 references) Ok
+  emit*                                                  (1 references) Ok
+  even                                                   (0 references) Ok
+  first-child                                            (0 references) Ok
+  first-of-type                                          (0 references) Ok
+  flatmap                                                (2 references) Ok
+  flatten-nodes-coll                                     (2 references) Ok
+  fragment-selector?                                     (2 references) Ok
+  get-resource                                           (3 references) Ok
+  has                                                    (1 references) Ok
+  has-class                                              (2 references) Ok
+  html-content                                           (3 references) Ok
+  html-resource                                          (1 references) Ok
+  html-snippet                                           (5 references) Ok
+  id=                                                    (3 references) Ok
+  intersection                                           (9 references) Ok
+  last-child                                             (0 references) Ok
+  last-of-type                                           (0 references) Ok
+  left                                                   (3 references) Ok
+  lefts                                                  (3 references) Ok
+  let-select                                             (10 references) Ok
+  lockstep-transform                                     (2 references) Ok
+  lockstep-transformation                                (9 references) Ok
+  move                                                   (4 references) Ok
+  node-selector?                                         (2 references) Ok
+  nth-child                                              (1 references) Ok
+  nth-last-child                                         (1 references) Ok
+  nth-last-of-type                                       (1 references) Ok
+  nth-of-type                                            (1 references) Ok
+  odd                                                    (0 references) Ok
+  only-child                                             (0 references) Ok
+  only-of-type                                           (0 references) Ok
+  parse                                                  (9 references) Ok
+  pred                                                   (1 references) Ok
+  prepend                                                (3 references) Ok
+  re-pred                                                (2 references) Ok
+  remove-attr                                            (4 references) Ok
+  remove-class                                           (3 references) Ok
+  right                                                  (3 references) Ok
+  rights                                                 (3 references) Ok
+  root                                                   (2 references) Ok
+  select                                                 (2 references) Ok
+  select-fragments*                                      (3 references) Ok
+  select-nodes*                                          (3 references) Ok
+  set-attr                                               (3 references) Ok
+  snippet                                                (4 references) Ok
+  snippet*                                               (9 references) Ok
+  sniptest                                               (4 references) Ok
+  sniptest*                                              (3 references) Ok
+  startparse-sax                                         (3 references) Ok
+  strict-mode                                            (4 references) Ok
+  strict-mode*                                           (0 references) Ok
+  substitute                                             (2 references) Ok
+  tag                                                    (1 references) Ok
+  tag=                                                   (2 references) Ok
+  tag?                                                   (0 references) Ok
+  template                                               (5 references) Ok
+  text                                                   (6 references) Ok
+  text-node                                              (1 references) Ok
+  text-pred                                              (4 references) Ok
+  texts                                                  (2 references) Ok
+  this-node                                              (0 references) Ok
+  transform                                              (4 references) Ok
+  transform-content                                      (9 references) Ok
+  transformation                                         (8 references) Ok
+  union                                                  (9 references) Ok
+  unwrap                                                 (0 references) Ok
+  void                                                   (2 references) Ok
+  whitespace                                             (0 references) Ok
+  wrap                                                   (2 references) Ok
+  xml-resource                                           (1 references) Ok
+  xml-zip                                                (5 references) Ok
+  zip-pred                                               (2 references) Ok
+  zip-select                                             (2 references) Ok
+  zip-select-fragments*                                  (2 references) Ok
+  zip-select-nodes*                                      (3 references) Ok
+  Looking for vars to remove...
+    No vars removed.
+=========================================
+  1 projects, 2 namespaces, 110 vars found in enlive
+  Took 10.711s
+
+
+
+-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
