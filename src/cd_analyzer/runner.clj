@@ -82,3 +82,4 @@
   (reportln "Done."))
 
 
+#_ (run-update-and-log "./logs/trammel-import.log" "http://github.com/fogus/trammel.git")

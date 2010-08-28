@@ -1,0 +1,74 @@
+Running update for http://github.com/fogus/trammel.git on Sat Aug 28 12:03:15 HST 2010
+-----------------------------------------
+Cloning repo... Clone of http://github.com/fogus/trammel.git successful.
+Done.
+Building / Installing
+Created /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/93d9a6cf-7629-4d61-9fd2-726d78f410fe2223790989686632560/trammel/trammel-0.3.2.jar
+Wrote pom.xml
+[INFO] Installing /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/93d9a6cf-7629-4d61-9fd2-726d78f410fe2223790989686632560/trammel/trammel-0.3.2.jar to /Users/zkim/.m2/repository/trammel/trammel/0.3.2/trammel-0.3.2.jar
+
+
+
+Updating Dependencies.
+[INFO] snapshot cd-analyzer:cd-analyzer:0.1.0-SNAPSHOT: checking for updates from central
+[INFO] snapshot cd-analyzer:cd-analyzer:0.1.0-SNAPSHOT: checking for updates from clojure
+[INFO] snapshot cd-analyzer:cd-analyzer:0.1.0-SNAPSHOT: checking for updates from clojure-snapshots
+[INFO] snapshot cd-analyzer:cd-analyzer:0.1.0-SNAPSHOT: checking for updates from clojars
+Copying 9 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/93d9a6cf-7629-4d61-9fd2-726d78f410fe2223790989686632560/temp-proj/lib
+[INFO] snapshot lein-run:lein-run:1.0.0-SNAPSHOT: checking for updates from central
+[INFO] snapshot lein-run:lein-run:1.0.0-SNAPSHOT: checking for updates from clojure
+[INFO] snapshot lein-run:lein-run:1.0.0-SNAPSHOT: checking for updates from clojure-snapshots
+[INFO] snapshot lein-run:lein-run:1.0.0-SNAPSHOT: checking for updates from clojars
+Overriding previous definition of reference to cd-temp
+Overriding previous definition of reference to dependency.fileset
+Copying 3 files to /private/var/folders/zz/zZa-nlUYFDGIpRKFdW3kUk+++TI/-Tmp-/93d9a6cf-7629-4d61-9fd2-726d78f410fe2223790989686632560/temp-proj/lib/dev
+
+
+
+Running import process.
+trammel :: Import Library Task
+=========================================
+  1 projects, 1 namespaces, 10 vars.
+  trammel                                                (project)
+  fogus.me.trammel                                       (ns) Ok
+  all-negative?                                          (var) Ok
+  all-numbers?                                           (var) Ok
+  all-positive?                                          (var) Ok
+  anything                                               (var) Ok
+  contract                                               (var) Ok
+  defconstrainedfn                                       (var) Ok
+  defcontract                                            (var) Ok
+  funcify*                                               (var) Ok
+  provide-contracts                                      (var) Ok
+  with-constraints                                       (var) Ok
+  all-negative?                                          (4 references) Ok
+  all-numbers?                                           (2 references) Ok
+  all-positive?                                          (3 references) Ok
+  anything                                               (1 references) Ok
+  contract                                               (13 references) Ok
+  defconstrainedfn                                       (7 references) Ok
+  defcontract                                            (7 references) Ok
+  funcify*                                               (3 references) Ok
+  provide-contracts                                      (9 references) Ok
+  with-constraints                                       (3 references) Ok
+  Looking for vars to remove...
+    Removed 10 vars:
+      macrolet                                               (fogus.me.trammel.macros)
+      collect-bodies                                         (fogus.me.trammel.impl)
+      build-contract                                         (fogus.me.trammel.impl)
+      build-constraints-map                                  (fogus.me.trammel.impl)
+      build-forms-map                                        (fogus.me.trammel.impl)
+      special-forms                                          (fogus.me.trammel.macros)
+      macro-fns                                              (fogus.me.trammel.macros)
+      protected-symbols                                      (fogus.me.trammel.macros)
+      macro-symbols                                          (fogus.me.trammel.macros)
+      special-form-handlers                                  (fogus.me.trammel.macros)
+=========================================
+  1 projects, 1 namespaces, 10 vars found in trammel
+  Took 2.743s
+
+
+
+-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+

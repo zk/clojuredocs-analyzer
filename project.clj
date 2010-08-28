@@ -5,7 +5,8 @@
 		 [mysql/mysql-connector-java "5.1.12"]
 		 [org.slf4j/slf4j-api "1.6.1"]
 		 [ch.qos.logback/logback-classic "0.9.24"]
-		 [clj-stacktrace "0.1.3"]]
+		 [clj-stacktrace "0.1.3"]
+		 [trammel "0.3.2"]]
   :dev-dependencies [[leiningen/lein-swank "1.2.0-SNAPSHOT"]
 		     [lein-run "1.0.0-SNAPSHOT"]
 		     [com.stuartsierra/lazytest "1.0.0-SNAPSHOT"]
@@ -17,6 +18,5 @@
 		     [circumspec "0.0.12"]
 		     [midje "0.1.1"]
 		     [ring "0.2.5"]
-		     [incanter "1.2.3-SNAPSHOT"]
-		     [trammel "0.1.0"]]
+		     [incanter "1.2.3-SNAPSHOT"]]
   :main main)

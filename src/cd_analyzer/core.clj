@@ -204,5 +204,7 @@
 (defn run-update-clojure-contrib [root-dir]
   (report-on-lib (parse-clojure-contrib (File. root-dir))))
 
+(run-update "/Users/zkim/clojurelibs/trammel")
+
 #_(run-update-clojure-core "/Users/zkim/clojurelibs/clojure")
 #_(pprint (parse-clojure-core (File. "/Users/zkim/clojurelibs/clojure")))
