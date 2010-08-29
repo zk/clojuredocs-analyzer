@@ -2,7 +2,8 @@
   (:use [cd-analyzer.util] 
 	[cd-analyzer.language]
 	[cd-analyzer.database]
-	[clojure.contrib.pprint])
+	[clojure.contrib.pprint]
+	[fogus.me.trammel :only [provide-contracts]])
   (:import [java.io File FileReader]
 	   [clojure.lang LineNumberingPushbackReader]))
 
@@ -25,6 +26,26 @@
 		      {:ns (str (:ns meta))
 		       :name (str (:name meta))}) (vars-in v))}))
 
+#_(require 'clojure.contrib.with-ns)
+#_(clojure.contrib.with-ns/with-ns 'fogus.me.trammel
+  (defmacro provide-contracts [& contracts]
+    (let [fn-names  (map first contracts)
+	  contracts (for [[n ds & more] contracts] 
+		      (if (vector? (first more)) 
+			(list* `fogus.me.trammel/contract n ds more) 
+			(first more)))]
+      `(do
+	 ~@(for [[n# c#] (zipmap fn-names contracts)]
+	     (list `alter-var-root (list `var n#)
+		   (list `fn '[f] (list `vary-meta 'f `assoc :original-var-def n#))))
+	 ~@(for [[n# c#] (zipmap fn-names contracts)]
+	     (list `alter-var-root (list `var n#) 
+		   (list `fn '[f c] (list `fogus.me.trammel/with-constraints 'f 'c)) c#))
+	 nil))))
+
+	     
+
+
 (defn parse-ns-map [root-path]
   (fn [file]
     (when-let [ns (file-to-ns file)]
@@ -35,6 +56,13 @@
 	 :web-path (.replace (.getAbsolutePath file) (.getAbsolutePath root-path) "")
 	 :vars (map to-var-map (ns-to-vars ns))}))))
 
+(provide-contracts
+ [to-var-map "Checks to see that required information is in the metadata"
+  [v] [(let [m (meta v)]
+	 (and (:name m)
+	      (:ns m)))]]
+ [parse-ns-map "parameter must be a File"
+  [root-path] [(= (class root-path) java.io.File) => (or nil? map?)]])
 
 (defn parse-lein [#^File file]
   (let [rdr (LineNumberingPushbackReader. (FileReader. file))
@@ -204,7 +232,7 @@
 (defn run-update-clojure-contrib [root-dir]
   (report-on-lib (parse-clojure-contrib (File. root-dir))))
 
-(run-update "/Users/zkim/clojurelibs/trammel")
+#_(run-update "/Users/zkim/clojurelibs/trammel")
 
 #_(run-update-clojure-core "/Users/zkim/clojurelibs/clojure")
 #_(pprint (parse-clojure-core (File. "/Users/zkim/clojurelibs/clojure")))

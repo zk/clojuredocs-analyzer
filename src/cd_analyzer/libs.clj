@@ -30,7 +30,7 @@
 		:password "gammaClojureDocs1024"}]
   (run-update-clojure-core "/Users/zkim/clojurelibs/clojure"))
 
-(binding [*db* {:classname "com.mysql.jdbc.Driver"
+#_(binding [*db* {:classname "com.mysql.jdbc.Driver"
 		:subprotocol "mysql"
 		:subname "//localhost:4444/clojuredocs?user=root&password=gammaClojureDocs1024"
 		:create true
@@ -40,5 +40,5 @@
 
 
 
-(run-update-clojure-core "/Users/zkim/clojurelibs/clojure")
-(run-update-clojure-contrib "/Users/zkim/clojurelibs/clojure-contrib")
+#_(run-update-clojure-core "/Users/zkim/clojurelibs/clojure")
+#_(run-update-clojure-contrib "/Users/zkim/clojurelibs/clojure-contrib")
