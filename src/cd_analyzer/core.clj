@@ -167,7 +167,7 @@
        (reportln)
        (doseq [v (sort-by :name vars)]
 	 (report (indt) (:name v) (pad (:name v)) "(var)")
-	 (if ((store-var-map (:name library)) v)
+	 (if ((store-var-map (:name library) (:version library)) v)
 	   (reportln " Ok")
 	   (reportln " Error")))
        (reportln)
@@ -205,4 +205,5 @@
   (report-on-lib (parse-clojure-contrib (File. root-dir))))
 
 #_(run-update-clojure-core "/Users/zkim/clojurelibs/clojure")
+#_(run-update-clojure-contrib "/Users/zkim/clojurelibs/clojure-contrib")
 #_(pprint (parse-clojure-core (File. "/Users/zkim/clojurelibs/clojure")))

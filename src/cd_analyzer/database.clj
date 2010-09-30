@@ -171,7 +171,7 @@ string, which looks nasty when you display it."
      (with-query-results rs ["select * from functions where ns=? and name=?" ns name]
        (first rs)))))
 
-(defn store-var-map [lib]
+(defn store-var-map [lib version]
   (fn [var-map]
     (try
      (let [{:keys [ns name file line arglists added doc source]} var-map]
@@ -184,6 +184,7 @@ string, which looks nasty when you display it."
 	       :functions 
 	       ["id=?" (:id existing)] 
 	       {:library lib 
+                :version version
 		:ns (str ns) 
 		:name (str name)
 		:file file 
@@ -196,8 +197,9 @@ string, which looks nasty when you display it."
 		:updated_at (java.sql.Timestamp. (System/currentTimeMillis))})
 	      (insert-values
 	       :functions
-	       [:library :ns :name :file :line :arglists_comp :added :doc :shortdoc :source :updated_at :created_at]
+	       [:library :version :ns :name :file :line :arglists_comp :added :doc :shortdoc :source :updated_at :created_at]
 	       [lib
+                version
 		(str ns) 
 		(str name) 
 		file 
@@ -258,7 +260,7 @@ string, which looks nasty when you display it."
 			[:name :doc :source_url :created_at :updated_at] 
 			[name doc web-path (sql-now) (sql-now)]))))))
 
-(defn store-var-references [var-map]
+(defn store-var-references var-map
   (when-let [vars-in (:vars-in var-map)]
     (try
      (with-connection *db*
