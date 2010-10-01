@@ -1,13 +1,13 @@
 (ns cd-analyzer.core-test
-  (:use [cd-analyzer.core])
-  (:use [lazytest.describe]
+  (:use [cd-analyzer.core]
+        [lazytest.describe]
 	[lazytest.expect]))
 
 
 (describe to-var-map
-  (given "a var-map of 'reduce'" [{:keys [name ns doc line file added 
-					  source arglists vars-in]} 
-				  (to-var-map #'clojure.core/reduce)]
+  (given [{:keys [name ns doc line file added 
+                  source arglists vars-in]} 
+          (to-var-map #'clojure.core/reduce)]
 	 (do-it "gives the correct values"
 	   (expect (= "reduce" name))
 	   (expect (= "clojure.core" ns))

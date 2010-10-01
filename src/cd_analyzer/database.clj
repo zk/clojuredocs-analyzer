@@ -165,10 +165,12 @@ string, which looks nasty when you display it."
     (insert-or-update test update insert)))
 
 
-(defn query-var [ns name]
+(defn query-var [lib var-map]
   (with-connection *db*
     (transaction
-     (with-query-results rs ["select * from functions where ns=? and name=?" ns name]
+     (with-query-results 
+       rs 
+       ["select * from functions where library=? and ns=? and name=?" lib (str (:ns var-map)) (str (:name var-map))]
        (first rs)))))
 
 (defn store-var-map [lib version]
@@ -177,8 +179,7 @@ string, which looks nasty when you display it."
      (let [{:keys [ns name file line arglists added doc source]} var-map]
        (with-connection *db*
 	 (transaction
-	  (let [existing (with-query-results rs ["select * from functions where library = ? and ns = ? and name = ? limit 1" lib (str ns) (str name)]
-			   (first rs))]
+	  (let [existing (query-var lib var-map)]
 	    (if existing
 	      (update-values 
 	       :functions 
@@ -260,7 +261,7 @@ string, which looks nasty when you display it."
 			[:name :doc :source_url :created_at :updated_at] 
 			[name doc web-path (sql-now) (sql-now)]))))))
 
-(defn store-var-references var-map
+(defn store-var-references [var-map]
   (when-let [vars-in (:vars-in var-map)]
     (try
      (with-connection *db*
@@ -278,16 +279,16 @@ string, which looks nasty when you display it."
      (catch Exception e 
        (reportln "Exception in store-var-references: ") 
        (reportln var-map " -> " (.getMessage e)) 
-       nil))))
+       nil)))
 
-(def ccld {:name "Clojure Core"
-	  :root-dir "/Users/zkim/clojurelibs/clojure"
-	  :src-dir "/Users/zkim/clojurelibs/clojure/src"
-	  :description "Clojure core environment and runtime library."
-	  :site-url "http://clojure.org"
-	  :source-base-url "http://github.com/clojure/clojure/blob/master/src/clj/"
-	  :copyright "&copy Rich Hickey.  All rights reserved."
-	  :license "<a href=\"http://www.eclipse.org/legal/epl-v10.html\">Eclipse Public License 1.0</a>"})
+  (def ccld {:name "Clojure Core"
+             :root-dir "/Users/zkim/clojurelibs/clojure"
+             :src-dir "/Users/zkim/clojurelibs/clojure/src"
+             :description "Clojure core environment and runtime library."
+             :site-url "http://clojure.org"
+             :source-base-url "http://github.com/clojure/clojure/blob/master/src/clj/"
+             :copyright "&copy Rich Hickey.  All rights reserved."
+             :license "<a href=\"http://www.eclipse.org/legal/epl-v10.html\">Eclipse Public License 1.0</a>"}))
 
 (defn track-import-start [libdef]
   (with-connection *db*

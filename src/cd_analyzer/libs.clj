@@ -22,7 +22,7 @@
      (run-update "/Users/zkim/clojurelibs/incanter")
      (run-update "/Users/zkim/clojurelibs/trammel")))
 
-(run-update "/Users/zkim/clojurelibs/ring")
+#_ (run-update "/Users/zkim/clojurelibs/ring")
 #_(run-update-and-log "./logs/enlive-import.log" "http://github.com/cgrand/enlive.git")
 
 

@@ -1,6 +1,6 @@
 (ns cd-analyzer.language-test
-  (:use [cd-analyzer.language] :reload-all)
-  (:use [lazytest describe expect]
+  (:use [cd-analyzer.language]
+        [lazytest describe expect]
 	[clojure.contrib.pprint])
   (:require [ring.adapter.httpcore])
   (:import [java.io File]))
@@ -24,12 +24,12 @@
        (ns-to-vars (find-ns 'clojure.core))))
 
 (describe mkfile
-  (given "from strings" [foo-bar (mkfile "foo" "bar")]
+  (given [foo-bar (mkfile "foo" "bar")]
 	 (it "returns a file instance"
 	   (instance? java.io.File foo-bar))
 	 (it "has the correct path"
 	   (= "foo/bar" (.getPath foo-bar))))
-  (given "from strings and files" [from-file-and-string (mkfile (mkfile "foo" "bar") "baz")]
+  (given [from-file-and-string (mkfile (mkfile "foo" "bar") "baz")]
 	 (it "returns a file instance"
 	   (instance? java.io.File from-file-and-string))
 	 (it "has the correct path"
