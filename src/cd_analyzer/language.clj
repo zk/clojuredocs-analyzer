@@ -12,7 +12,7 @@
 	       %))
        (interpose "/")
        (apply str)
-#_       (File.)))
+       (File.)))
 
 (defn file-exists? [#^File file]
   (.exists file))
