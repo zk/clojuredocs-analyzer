@@ -168,51 +168,81 @@ string, which looks nasty when you display it."
 (defn query-var [lib var-map]
   (with-connection *db*
     (transaction
-     (with-query-results 
-       rs 
-       ["select * from functions where library=? and ns=? and name=?" lib (str (:ns var-map)) (str (:name var-map))]
-       (first rs)))))
+     (let [var-base (with-query-results 
+                      rs 
+                      ["select * from functions where library=? and ns=? and name=?" lib (str (:ns var-map)) (str (:name var-map))]
+                      (first rs))]
+       (when var-base
+         (assoc var-base 
+           :versions
+           (with-query-results rs ["select * from function_versions where function_id = ? order by created_at DESC" (:id var-base)]
+             (doall rs))))))))
+
 
 (defn store-var-map [lib version]
   (fn [var-map]
-    (try
-     (let [{:keys [ns name file line arglists added doc source]} var-map]
-       (with-connection *db*
-	 (transaction
-	  (let [existing (query-var lib var-map)]
-	    (if existing
-	      (update-values 
-	       :functions 
-	       ["id=?" (:id existing)] 
-	       {:library lib 
-                :version version
-		:ns (str ns) 
-		:name (str name)
-		:file file 
-		:line line 
-		:arglists_comp (apply str (interpose "|" arglists))
-		:added added
-		:doc doc
-		:shortdoc (if (:shortdoc existing) (:shortdoc existing) (apply str (take 70 doc)))
-		:source source
-		:updated_at (java.sql.Timestamp. (System/currentTimeMillis))})
-	      (insert-values
-	       :functions
-	       [:library :version :ns :name :file :line :arglists_comp :added :doc :shortdoc :source :updated_at :created_at]
-	       [lib
-                version
-		(str ns) 
-		(str name) 
-		file 
-		line 
-		(apply str (interpose "|" arglists))
-		added
-		doc
-		(apply str (take 70 doc))
-		source
-		(java.sql.Timestamp. (System/currentTimeMillis))
-		(java.sql.Timestamp. (System/currentTimeMillis))]))))))
-     (catch Exception e (println (str (:name var-map) " -- " e))))))
+    (let [{:keys [ns name file line arglists added doc source]} var-map]
+      (with-connection *db*
+        (transaction
+         (let [existing (query-var lib var-map)]
+           (if existing
+             (do
+               (update-values 
+                :functions 
+                ["id=?" (:id existing)] 
+                {:library lib 
+                 :ns (str ns) 
+                 :name (str name)
+                 :updated_at (java.sql.Timestamp. (System/currentTimeMillis))})
+               (let [existing-version (first 
+                                       (filter 
+                                        #(= version (:version %))
+                                        (with-query-results 
+                                          rs 
+                                          ["select * from function_versions where function_id = ? and version = ?" (:id existing) version]
+                                          (doall rs))))]
+                 (if existing-version
+                   (update-values
+                    :function_versions
+                    ["id=?" (:id existing-version)]
+                    {:file file
+                     :line line
+                     :arglists_comp (apply str (interpose "|" arglists))
+                     :added added
+                     :doc doc
+                     :shortdoc (apply str (take 70 doc))
+                     :source source
+                     :updated_at (java.sql.Timestamp. (System/currentTimeMillis))})
+                   (insert-record
+                    :function_versions
+                    {:function_id (:id existing)
+                     :file file
+                     :line line
+                     :arglists_comp (apply str (interpose "|" arglists))
+                     :added added
+                     :doc doc
+                     :shortdoc (apply str (take 70 doc))
+                     :source source
+                     :version version
+                     :created_at (java.sql.Timestamp. (System/currentTimeMillis))
+                     :updated_at (java.sql.Timestamp. (System/currentTimeMillis))}))))
+             (insert-with-id *db*
+               :functions {:library lib
+                           :ns (str ns)
+                           :name (str name)
+                           :updated_at (java.sql.Timestamp. (System/currentTimeMillis))
+                           :created_at (java.sql.Timestamp. (System/currentTimeMillis))}
+               :function_versions {:function_id (id :functions)
+                                   :file file
+                                   :line line
+                                   :arglists_comp (apply str (interpose "|" arglists))
+                                   :added added
+                                   :doc doc
+                                   :shortdoc (apply str (take 70 doc))
+                                   :source source
+                                   :version version
+                                   :created_at (java.sql.Timestamp. (System/currentTimeMillis))
+                                   :updated_at (java.sql.Timestamp. (System/currentTimeMillis))}))))))))
 
 (defn lookup-var-id [var-map]
   (transaction
@@ -236,11 +266,11 @@ string, which looks nasty when you display it."
        (doall (map #(delete-rows :function_references ["to_function_id=?" %]) ids))))
     (doall (seq to-remove))))
 
-(defn query-ns [ns]
-  (with-connection *db*
-    (transaction
-     (with-query-results rs ["select * from namespaces where name=?" ns]
-       (first rs)))))
+(defn query-ns [ns-map]
+(with-connection *db*
+                  (transaction
+                   (with-query-results rs ["select * from namespaces where name = ? and doc = ?" (:name ns-map) (:doc ns-map)]
+                     (first rs)))))
 
 (defn store-ns-map [ns-map]
   (with-connection *db*

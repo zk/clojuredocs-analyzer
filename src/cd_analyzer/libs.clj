@@ -26,6 +26,9 @@
 #_(run-update-and-log "./logs/enlive-import.log" "http://github.com/cgrand/enlive.git")
 
 
+#_(run-update-for "http://github.com/mmcgrana/ring.git" :branch "0.2")
+
+
 #_(binding [*db* {:classname "com.mysql.jdbc.Driver"
                   :subprotocol "mysql"
                   :subname "//localhost:4444/clojuredocs?user=root&password=gammaClojureDocs1024"

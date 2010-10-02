@@ -7,7 +7,7 @@
 	[clojure.contrib.except :only (throwf)]))
 
 
-(defn clone-target-repo [git-url download-to-dir]
+(defn clone-target-repo [git-url download-to-dir opts]
   (let [local-repo-path (str 
 			 download-to-dir
 			 "/"
@@ -18,9 +18,10 @@
 	  res (str (:out cmd-res) " " (:err cmd-res))]
       (cond (> (count (re-find #"git-upload-pack not found" res)) 0) (println "Error: " res)
 	    (> (count (re-find #"already exists and is not an empty directory." res)) 0) (println "Error: " res)
-	    :else (do 
-		   (println (str "Clone of " git-url " successful."))
-		   local-repo-path)))))
+	    :else (do
+                    (sh "git" "checkout" (str "origin/" (get opts :branch "master")) "-b" (get opts :branch "master"))
+                    (println (str "Clone of " git-url " successful."))
+                    local-repo-path)))))
 
 (defn gen-dep-vec [project-map]
   `[~(symbol (:name project-map)) ~(:version project-map)])
@@ -41,14 +42,16 @@
   (spit (str temp-dir "/project.clj") (gen-project-def
 				       (parse-project (mkfile project-root "project.clj")))))
 
-(defn run-update-for [git-url]
-  (let [start (System/currentTimeMillis)]
+
+(defn run-update-for [git-url & opts]
+  (let [opts (merge {:branch "master"} (apply (partial assoc {}) opts)) 
+        start (System/currentTimeMillis)]
     #_ (when (not (.exists (java.io.File. proj-root))) (throwf "Couldn't find project root: %s" proj-root))
     (reportln (str "Running update for " git-url " on " (java.util.Date.)))
     (reportln "-----------------------------------------")
     (with-temp-dir tmp-dir
       (report "Cloning repo... ")
-      (let [repo-dir (clone-target-repo git-url tmp-dir)
+      (let [repo-dir (clone-target-repo git-url tmp-dir opts)
 	    tmp-proj-dir (.getAbsolutePath (java.io.File. (str tmp-dir "/temp-proj")))]
 	(.mkdirs (java.io.File. tmp-proj-dir))
 	(reportln "Done.")

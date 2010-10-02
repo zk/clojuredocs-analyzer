@@ -90,12 +90,12 @@
 (defn parse-clojure-contrib [#^File root]
   (let [git-map (parse-git (mkfile root ".git"))
 	cc-map {:name "Clojure Contrib"
-			:description "The user contributions library, clojure.contrib, is a collection of namespaces each of which implements features that we believe may be useful to a large part of the Clojure community."
-			:site-url "http://richhickey.github.com/clojure-contrib/"
-			:copyright "&copy Rich Hickey.  All rights reserved."
-			:license "<a href=\"http://www.eclipse.org/legal/epl-v10.html\">Eclipse Public License 1.0</a>"
-			:version "1.2.0"
-			:source-root (mkfile root "src" "main" "clojure")}
+                :description "The user contributions library, clojure.contrib, is a collection of namespaces each of which implements features that we believe may be useful to a large part of the Clojure community."
+                :site-url "http://richhickey.github.com/clojure-contrib/"
+                :copyright "&copy Rich Hickey.  All rights reserved."
+                :license "<a href=\"http://www.eclipse.org/legal/epl-v10.html\">Eclipse Public License 1.0</a>"
+                :version "1.1.0"
+                :source-root (mkfile root "src" "clojure")}
 	project cc-map
 	project (assoc project :cljs (cljs-in (:source-root project)))
 	project (assoc project :namespaces (map (parse-ns-map root) (:cljs project)))
