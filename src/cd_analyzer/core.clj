@@ -79,7 +79,7 @@
 		     :site-url "http://clojure.org"
 		     :copyright "&copy Rich Hickey.  All rights reserved."
 		     :license "<a href=\"http://www.eclipse.org/legal/epl-v10.html\">Eclipse Public License 1.0</a>"
-		     :version "1.2.0"
+		     :version "1.3.0-alpha1"
 		     :source-root (mkfile root "src" "clj")}
 	project clojure-map
 	project (assoc project :cljs (cljs-in (:source-root project)))

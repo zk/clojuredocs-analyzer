@@ -70,7 +70,7 @@
      (find-ns (symbol ns-str))
      (catch Exception e (println (str "Warning: couldn't resolve ns " ns-str))))))
 
-(defn ns-to-vars [#^Namespace ns]
+(defn ns-to-vars [ns]
   (if (nil? ns)
     (throw (Exception. "ns-to-vars: ns parameter is nil"))
     (->> (ns-interns ns)
