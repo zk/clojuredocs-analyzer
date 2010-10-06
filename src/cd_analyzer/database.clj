@@ -146,8 +146,9 @@ string, which looks nasty when you display it."
 	source-base-url (:web-src-dir libdef)
 	copyright (:copyright libdef)
 	license (:license libdef)
+        version (:version libdef)
 	test (fn [] 
-	       (with-query-results rs ["select * from libraries where name = ? limit 1" name] 
+	       (with-query-results rs ["select * from libraries where name = ? and version = ? limit 1" name version] 
 		 (first (doall rs))))
 	update (fn [existing]
 		 (update-values :libraries
@@ -157,34 +158,35 @@ string, which looks nasty when you display it."
 				 :source_base_url source-base-url
 				 :copyright copyright
 				 :license license
+                                 :version version
 				 :updated_at (sql-now)}))
 	insert (fn []
 		 (insert-values :libraries 
-				[:name :description :site_url :source_base_url :copyright :license :created_at :updated_at]
-				[name description site-url source-base-url copyright license (sql-now) (sql-now)]))]
+				[:name :description :site_url :source_base_url :copyright :license :version :created_at :updated_at]
+				[name description site-url source-base-url copyright license version (sql-now) (sql-now)]))]
     (insert-or-update test update insert)))
 
 
-(defn query-var [lib var-map]
+(defn query-var [lib version var-map]
   (with-connection *db*
     (transaction
      (with-query-results 
        rs 
-       ["select * from functions where library=? and ns=? and name=?" lib (str (:ns var-map)) (str (:name var-map))]
+       ["select * from functions where library=? and version=? and ns=? and name=?" lib version (str (:ns var-map)) (str (:name var-map))]
        (first rs)))))
 
-(defn store-var-map [lib version]
+(defn store-var-map [lib-name version]
   (fn [var-map]
     (try
      (let [{:keys [ns name file line arglists added doc source]} var-map]
        (with-connection *db*
 	 (transaction
-	  (let [existing (query-var lib var-map)]
+	  (let [existing (query-var lib-name version var-map)]
 	    (if existing
 	      (update-values 
 	       :functions 
 	       ["id=?" (:id existing)] 
-	       {:library lib 
+	       {:library lib-name 
                 :version version
 		:ns (str ns) 
 		:name (str name)
@@ -199,7 +201,7 @@ string, which looks nasty when you display it."
 	      (insert-values
 	       :functions
 	       [:library :version :ns :name :file :line :arglists_comp :added :doc :shortdoc :source :updated_at :created_at]
-	       [lib
+	       [lib-name
                 version
 		(str ns) 
 		(str name) 
@@ -219,11 +221,11 @@ string, which looks nasty when you display it."
    (with-query-results rs ["select * from functions where ns = ? and name = ? limit 1" (str (:ns var-map)) (str (:name var-map))]
      (:id (first rs)))))
 
-(defn remove-stale-vars [libname timestamp]
+(defn remove-stale-vars [libname version timestamp]
   (let [to-remove
 	(with-connection *db*
 	  (transaction 
-	   (with-query-results rs ["select * from functions where library = ? and (updated_at < ? or updated_at is NULL)" libname (java.sql.Timestamp. timestamp)]
+	   (with-query-results rs ["select * from functions where library = ? and version = ? and (updated_at < ? or updated_at is NULL)" libname version (java.sql.Timestamp. timestamp)]
 	     (doall rs))))
 	ids (map :id to-remove)]
     (with-connection *db*
@@ -242,24 +244,25 @@ string, which looks nasty when you display it."
      (with-query-results rs ["select * from namespaces where name=?" ns]
        (first rs)))))
 
-(defn store-ns-map [ns-map]
+(defn store-ns-map [version ns-map]
   (with-connection *db*
     (transaction
      (let [name (str (:name ns-map))
 	   web-path (:web-path ns-map)
 	   doc (:doc ns-map)
 	   doc (remove-leading-whitespace (if doc doc ""))
-	   existing (with-query-results rs ["select * from namespaces where name = ? limit 1" name] (first (doall rs)))]
+	   existing (with-query-results rs ["select * from namespaces where name = ? and version = ? limit 1" name version] (first (doall rs)))]
        (if existing
 	 (update-values :namespaces 
 			["id=?" (:id existing)]
 			{:name name
 			 :doc doc
 			 :source_url web-path
+                         :version version
 			 :updated_at (sql-now)})
 	 (insert-values :namespaces 
-			[:name :doc :source_url :created_at :updated_at] 
-			[name doc web-path (sql-now) (sql-now)]))))))
+			[:name :doc :source_url :version :created_at :updated_at] 
+			[name doc web-path version (sql-now) (sql-now)]))))))
 
 (defn store-var-references [var-map]
   (when-let [vars-in (:vars-in var-map)]

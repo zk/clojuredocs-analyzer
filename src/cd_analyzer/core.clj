@@ -72,14 +72,14 @@
 		       (dissoc :dependencies))]
        (assoc library :projects projects)))
 
-(defn parse-clojure-core [#^File root]
+(defn parse-clojure-core [#^File root version]
   (let [git-map (parse-git (mkfile root ".git"))
 	clojure-map {:name "Clojure Core"
 		     :description "Clojure core environment and runtime library."
 		     :site-url "http://clojure.org"
 		     :copyright "&copy Rich Hickey.  All rights reserved."
 		     :license "<a href=\"http://www.eclipse.org/legal/epl-v10.html\">Eclipse Public License 1.0</a>"
-		     :version "1.2.0"
+		     :version version
 		     :source-root (mkfile root "src" "clj")}
 	project clojure-map
 	project (assoc project :cljs (cljs-in (:source-root project)))
@@ -139,7 +139,8 @@
       (update-project (+ i 2) project))))
 
 (defn report-on-lib [library]
-  (let [start (System/currentTimeMillis)]
+  (let [start (System/currentTimeMillis)
+        version (:version library)]
     (try
      (reportln)
      (reportln (:name library) " :: Import Library Task")
@@ -161,7 +162,7 @@
        (reportln)
        (doseq [ns (sort-by :name nss)]
 	 (report (indt) (:name ns) (pad (:name ns)) "(ns)")
-	 (if (store-ns-map ns)
+	 (if (store-ns-map version ns)
 	   (reportln " Ok")
 	   (reportln " Error")))
        (reportln)
@@ -181,7 +182,7 @@
        (reportln (indt) "Looking for vars to remove...")
        (if (= 0 num-vars)
 	 (reportln (indt) "No vars found, skipping removal of stale vars.")
-	 (let [removed (remove-stale-vars (:name library) start)]
+	 (let [removed (remove-stale-vars (:name library) version start)]
 	   (if (= 0 (count removed))
 	     (reportln (indt 2) "No vars removed.")
 	     (do
@@ -198,12 +199,12 @@
 (defn run-update [root-dir]
   (report-on-lib (parse-library (File. root-dir))))
 
-(defn run-update-clojure-core [root-dir]
-  (report-on-lib (parse-clojure-core (File. root-dir))))
+(defn run-update-clojure-core [root-dir version]
+  (report-on-lib (parse-clojure-core (File. root-dir) version)))
 
 (defn run-update-clojure-contrib [root-dir]
   (report-on-lib (parse-clojure-contrib (File. root-dir))))
 
-#_(run-update-clojure-core "/Users/zkim/clojurelibs/clojure")
+(run-update-clojure-core "/Users/zkim/clojurelibs/clojure" "1.3.0-alpha1")
 #_(run-update-clojure-contrib "/Users/zkim/clojurelibs/clojure-contrib")
 #_(pprint (parse-clojure-core (File. "/Users/zkim/clojurelibs/clojure")))
