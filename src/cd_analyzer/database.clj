@@ -4,6 +4,7 @@
 	[clojure.contrib.pprint]
 	[clojure.contrib.sql]
 	[clojure.contrib.string :only (as-str)])
+  (:require [clojure.string :as str ])
   (:import [java.io File]))
 
 
@@ -115,7 +116,7 @@ string, which looks nasty when you display it."
 
 (def *db* {:classname "com.mysql.jdbc.Driver"
 	   :subprotocol "mysql"
-	   :subname "//localhost:3306/clojuredocs?user=root&password="
+	   :subname "//localhost:3306/clojuredocs_development?user=root&password="
 	   :create true
 	   :username "root"
 	   :password ""})
@@ -123,9 +124,9 @@ string, which looks nasty when you display it."
 (defn query-lib-stats [libdef]
   (with-connection *db*
     (transaction
-     (let [lib-stats         (with-query-results rs ["select * from libraries where name = ?" (:name libdef)]
+     (let [lib-stats (with-query-results rs ["select * from libraries where name = ?" (:name libdef)]
 			    (first rs))
-	   var-count      (with-query-results rs ["select count(id) from functions where library = ?" (:name libdef)]
+	   var-count (with-query-results rs ["select count(id) from functions where library = ?" (:name libdef)]
 			    ((keyword "count(id)") (first rs)))]
        (when lib-stats (assoc lib-stats 
 			 :var-count var-count))))))
@@ -139,32 +140,66 @@ string, which looks nasty when you display it."
 
 (defn sql-now [] (java.sql.Timestamp. (System/currentTimeMillis)))
 
-(defn store-lib [libdef]
-  (let [name (:name libdef)
-	description (:description libdef)
-	site-url (:site-url libdef)
-	source-base-url (:web-src-dir libdef)
-	copyright (:copyright libdef)
-	license (:license libdef)
-        version (:version libdef)
-	test (fn [] 
-	       (with-query-results rs ["select * from libraries where name = ? and version = ? limit 1" name version] 
-		 (first (doall rs))))
-	update (fn [existing]
-		 (update-values :libraries
-				["id = ?" (:id existing)]
-				{:description description
-				 :site_url site-url
-				 :source_base_url source-base-url
-				 :copyright copyright
-				 :license license
+(defn make-url-friendly [s]
+  (let [bad-chars {\? "_Q"
+                   \/ "_"
+                   \space "_"}
+        replaced-chars (str/lower-case (apply str (replace bad-chars s)))]
+    (if (re-find #"^\.+$" replaced-chars)
+      (str/replace replaced-chars #"\." "_dot")
+      replaced-chars)))
+
+(defn store-lib 
+  "Inserts a libdef into the *db*, and returns the ID of the inserted
+   or updated record."
+  [{:keys [name 
+           description 
+           site-url 
+           source-base-url 
+           copyright
+           license
+           version]}]
+     (let [url-friendly-name (make-url-friendly (str name))
+           test (fn [] 
+                  (with-query-results rs ["select * from libraries where name = ? and version = ? limit 1" name version] 
+                    (first (doall rs))))
+           update (fn [{:keys [id]}]
+                    (update-values :libraries
+                                   ["id = ?" id]
+                                   {:description description
+                                    :site_url site-url
+                                    :source_base_url source-base-url
+                                    :copyright copyright
+                                    :license license
+                                    :version version
+                                    :url_friendly_name url-friendly-name
+                                    :updated_at (sql-now)})
+                    id)
+           insert (fn []
+                    (insert-record :libraries 
+                                {:description description
+                                 :site_url site-url
+                                 :source_base_url source-base-url
+                                 :copyright copyright
+                                 :license license
                                  :version version
-				 :updated_at (sql-now)}))
-	insert (fn []
-		 (insert-values :libraries 
-				[:name :description :site_url :source_base_url :copyright :license :version :created_at :updated_at]
-				[name description site-url source-base-url copyright license version (sql-now) (sql-now)]))]
-    (insert-or-update test update insert)))
+                                 :url_friendly_name url-friendly-name
+                                 :name (str name)
+                                 :created_at (sql-now)
+                                 :updated_at (sql-now)}))]
+       (insert-or-update test update insert)))
+
+
+#_(with-connection *db*
+  (transaction
+   (store-lib {:name "test-lib"
+               :description "test-desc"
+               :site-url "http://clojure.org"
+               :source-base-url "http://github.com/clojure"
+               :copyright nil
+               :license nil
+               :version "0.0.1"})))
+
 
 
 (defn query-var [lib version var-map]
@@ -175,57 +210,56 @@ string, which looks nasty when you display it."
        ["select * from functions where library=? and version=? and ns=? and name=?" lib version (str (:ns var-map)) (str (:name var-map))]
        (first rs)))))
 
-(defn store-var-map [lib-name version]
-  (fn [var-map]
-    (try
-     (let [{:keys [ns name file line arglists added doc source]} var-map]
-       (with-connection *db*
-	 (transaction
-	  (let [existing (query-var lib-name version var-map)]
-	    (if existing
-	      (update-values 
-	       :functions 
-	       ["id=?" (:id existing)] 
-	       {:library lib-name 
-                :version version
-		:ns (str ns) 
-		:name (str name)
-		:file file 
-		:line line 
-		:arglists_comp (apply str (interpose "|" arglists))
-		:added added
-		:doc doc
-		:shortdoc (if (:shortdoc existing) (:shortdoc existing) (apply str (take 70 doc)))
-		:source source
-		:updated_at (java.sql.Timestamp. (System/currentTimeMillis))})
-	      (insert-values
-	       :functions
-	       [:library :version :ns :name :file :line :arglists_comp :added :doc :shortdoc :source :updated_at :created_at]
-	       [lib-name
-                version
-		(str ns) 
-		(str name) 
-		file 
-		line 
-		(apply str (interpose "|" arglists))
-		added
-		doc
-		(apply str (take 70 doc))
-		source
-		(java.sql.Timestamp. (System/currentTimeMillis))
-		(java.sql.Timestamp. (System/currentTimeMillis))]))))))
-     (catch Exception e (println (str (:name var-map) " -- " e))))))
+(defn store-var-map
+  "Inserts a var-map into the *db*."
+  [ns-id
+   version
+   {:keys [name file line arglists added doc source]}]
+  (let [test (fn []
+               (with-query-results rs
+                 ["select  * from functions where namespace_id = ? and name = ?" ns-id (str name)]
+                 (first rs)))
+        update (fn [{:keys [id]}]
+                 (update-values :functions
+                                ["id = ?" id]
+                                {:file file
+                                 :line line
+                                 :arglists_comp (apply str (interpose "|" arglists))
+                                 :doc doc
+                                 :added added
+                                 :shortdoc (apply str (take 70 doc))
+                                 :source source
+                                 :url_friendly_name (make-url-friendly (str name))
+                                 :updated_at (sql-now)})
+                 id)
+        insert (fn []
+                 (insert-record :functions
+                                {:namespace_id ns-id
+                                 :name (str name)
+                                 :version version
+                                 :file file
+                                 :line line
+                                 :arglists_comp (apply str (interpose "|" arglists))
+                                 :doc doc
+                                 :added added
+                                 :shortdoc (apply str (take 70 doc))
+                                 :source source
+                                 :url_friendly_name (make-url-friendly (str name))
+                                 :created_at (sql-now)
+                                 :updated_at (sql-now)}))]
+    (insert-or-update test update insert)))
+
 
 (defn lookup-var-id [var-map]
   (transaction
-   (with-query-results rs ["select * from functions where ns = ? and name = ? limit 1" (str (:ns var-map)) (str (:name var-map))]
+   (with-query-results rs ["select * from flat_functions_view where ns = ? and name = ? limit 1" (str (:ns var-map)) (str (:name var-map))]
      (:id (first rs)))))
 
 (defn remove-stale-vars [libname version timestamp]
   (let [to-remove
 	(with-connection *db*
 	  (transaction 
-	   (with-query-results rs ["select * from functions where library = ? and version = ? and (updated_at < ? or updated_at is NULL)" libname version (java.sql.Timestamp. timestamp)]
+	   (with-query-results rs ["select * from flat_functions_view where library = ? and version = ? and (updated_at < ? or updated_at is NULL)" libname version (java.sql.Timestamp. timestamp)]
 	     (doall rs))))
 	ids (map :id to-remove)]
     (with-connection *db*
@@ -244,25 +278,34 @@ string, which looks nasty when you display it."
      (with-query-results rs ["select * from namespaces where name=?" ns]
        (first rs)))))
 
-(defn store-ns-map [version ns-map]
-  (with-connection *db*
-    (transaction
-     (let [name (str (:name ns-map))
-	   web-path (:web-path ns-map)
-	   doc (:doc ns-map)
-	   doc (remove-leading-whitespace (if doc doc ""))
-	   existing (with-query-results rs ["select * from namespaces where name = ? and version = ? limit 1" name version] (first (doall rs)))]
-       (if existing
-	 (update-values :namespaces 
-			["id=?" (:id existing)]
-			{:name name
-			 :doc doc
-			 :source_url web-path
-                         :version version
-			 :updated_at (sql-now)})
-	 (insert-values :namespaces 
-			[:name :doc :source_url :version :created_at :updated_at] 
-			[name doc web-path version (sql-now) (sql-now)]))))))
+(defn store-ns-map 
+  [lib-id 
+   version
+   {:keys [name web-path doc]}]
+  (let [name (str name)
+        doc (if doc (remove-leading-whitespace doc) "")
+        test (fn []
+               (with-query-results rs
+                 ["select * from namespaces where library_id = ? and name = ?" lib-id name]
+                 (first (doall rs))))
+        update (fn [{:keys [id]}]
+                 (update-values :namespaces
+                                ["id=?" id]
+                                {:doc doc
+                                 :source_url web-path
+                                 :version version
+                                 :updated_at (sql-now)})
+                 id)
+        insert (fn []
+                 (insert-record :namespaces
+                                {:library_id lib-id
+                                 :name name
+                                 :doc doc
+                                 :source_url web-path
+                                 :version version
+                                 :created_at (sql-now)
+                                 :updated_at (sql-now)}))]
+    (insert-or-update test update insert)))
 
 (defn store-var-references [var-map]
   (when-let [vars-in (:vars-in var-map)]

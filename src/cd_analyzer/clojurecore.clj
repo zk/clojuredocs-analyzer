@@ -1,11 +1,11 @@
 (ns cd-analyzer.clojurecore
   (:use [hiccup.core]
-	[cd-analyzer.core]
+        [cd-analyzer.database]
 	[clojure.contrib.sql]
 	[clojure.contrib.pprint])
   (:require [clojure.zip :as zip]))
 
-(declare db)
+(def db *db*)
 (def spheres [{:name "Simple Values"
 	       :categories [{:name "Numbers"
 			     :groups [{:name "Arithmetic"
@@ -212,10 +212,10 @@
   (try
    (let [m (meta (resolve symbol))
 	 {:keys [ns name]} m
-	 ns (str ns)
-	 name (str name)]
+	 ns (if ns (str ns) "clojure.core")
+	 name (if name (str name) (str symbol))]
      (try (Integer. (with-connection db 
-		      (transaction (with-query-results rs ["select * from functions where ns=? and name=?" ns name] (:id (first (doall rs)))))))
+		      (transaction (with-query-results rs ["select * from flat_functions_view where library = 'Clojure Core' and ns=? and name=?" ns name] (:id (first (doall rs)))))))
 	  (catch Exception e 0)))))
 
 #_(println (rubify-map 0 {:name "Exceptional"
@@ -232,12 +232,12 @@
 			      :id 0}
 			     (let [m (meta (resolve %))
 				   {:keys [ns name]} m
-				   ns (if (nil? ns) "" ns)
+				   ns (if (nil? ns) "clojure.core" ns)
 				   name (if (nil? name) (str %) name)
 				   id (id-for-symbol %)] 
 			       {:name (str name)
 				:ns (str ns)
-				:link (if (empty? (str ns)) "" (str "http://clojuredocs.org/v/" id))
+				:link (if (empty? (str ns)) "" (str "/v/" id))
 				:id id})) 
 			  syms))))
 
@@ -257,7 +257,8 @@
 			    m)))
 	 "\n" tabs "}")))
 
-#_ (spit "/Users/zkim/napplelabs/clojuredocs/cd-site/app/cc_quick_ref.rb" (rubify-spheres spheres))
+(spit "/Users/zkim/napplelabs/clojuredocs/app/cc_quick_ref.rb" (rubify-spheres spheres))
+
 
 (defn rubify-seq [indent s]
   (let [tabs (apply str (take indent (repeat "\t")))
@@ -368,5 +369,6 @@
      "&nbsp;"]]))
 
 
-#_ (do (spit "/Users/zkim/napplelabs/clojuredocs/cd-site/app/views/main/clojure_core.html.erb" (spheres-to-html spheres)))
+#_(do 
+  (spit "/Users/zkim/napplelabs/clojuredocs/app/views/main/clojure_core.html.erb" (spheres-to-html spheres)))
 

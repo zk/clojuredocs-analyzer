@@ -141,60 +141,59 @@
 (defn report-on-lib [library]
   (let [start (System/currentTimeMillis)
         version (:version library)]
-    (try
-     (reportln)
-     (reportln (:name library) " :: Import Library Task")
-     (reportln "=========================================")
-     (let [col-width 55
-	   pad (partial pad col-width)
-	   indt (partial indt 2)
-	   projects (get-projects library)
-	   num-projects (count projects)
-	   nss (get-nss library)
-	   num-nss (count nss)
-	   vars (get-vars library)
-	   num-vars (count vars)]
-       (reportln (indt) num-projects " projects, " num-nss " namespaces, " num-vars " vars.")
-       (reportln)
-       (store-lib library)
-       (doseq [p (sort-by :name projects)]
-	 (reportln (indt) (:name p) (pad (:name p)) "(project)"))
-       (reportln)
-       (doseq [ns (sort-by :name nss)]
-	 (report (indt) (:name ns) (pad (:name ns)) "(ns)")
-	 (if (store-ns-map version ns)
-	   (reportln " Ok")
-	   (reportln " Error")))
-       (reportln)
-       (doseq [v (sort-by :name vars)]
-	 (report (indt) (:name v) (pad (:name v)) "(var)")
-	 (if ((store-var-map (:name library) (:version library)) v)
-	   (reportln " Ok")
-	   (reportln " Error")))
-       (reportln)
-       (doseq [v (sort-by :name vars)]
-	 (let [v-to-vs-str (str (:name v))]
-	   (report (indt) v-to-vs-str (pad v-to-vs-str) "(" (count (:vars-in v)) " references)"))
-	 (if (store-var-references v)
-	   (reportln " Ok")
-	   (reportln " Error")))
-       (reportln)
-       (reportln (indt) "Looking for vars to remove...")
-       (if (= 0 num-vars)
-	 (reportln (indt) "No vars found, skipping removal of stale vars.")
-	 (let [removed (remove-stale-vars (:name library) version start)]
-	   (if (= 0 (count removed))
-	     (reportln (indt 2) "No vars removed.")
-	     (do
-	       (reportln (indt 2) "Removed " (count removed) " vars:")
-	       (doseq [vr removed]
-		 (reportln (indt 4) (:name vr) (pad (:name vr)) "(" (:ns vr) ")"))))))
-       (reportln "=========================================")
-       (reportln (indt) num-projects " projects, " num-nss " namespaces, " num-vars " vars found in " (:name library)))
-     (catch Exception e
-       (reportln "=========================================")
-       (reportln "Import process failed: " e)))
-    (reportln (indt 2) "Took " (/ (- (System/currentTimeMillis) start) 1000.0) "s")))
+    (reportln)
+    (reportln (:name library) " " version " :: Import Library Task")
+    (reportln "=========================================")
+    (let [col-width 55
+          pad (partial pad col-width)
+          indt (partial indt 2)
+          projects (get-projects library)
+          num-projects (count projects)
+          nss (get-nss library)
+          num-nss (count nss)
+          vars (get-vars library)
+          num-vars (count vars)]
+      (reportln (indt) num-projects " projects, " num-nss " namespaces, " num-vars " vars.")
+      (reportln)
+      (let [lib-id (store-lib library)]
+        (doseq [p (sort-by :name projects)]
+          (reportln (indt) (:name p) (pad (:name p)) "(project)"))
+        (reportln)
+        (doseq [ns (sort-by :name nss)]
+          (report (indt) (:name ns) (pad (:name ns)) "(ns)")
+          (let [ns-id (store-ns-map lib-id version ns)]
+            (if ns-id
+              (do
+                (reportln " Ok")
+                (doseq [v (sort-by :name (:vars ns))]
+                  (report (indt) (:name v) (pad (:name v)) "(var) " version)
+                  (if (store-var-map ns-id (:version library) v)
+                    (reportln " Ok")
+                    (reportln " Error")))
+                (reportln)
+                )
+              (reportln " Error"))))
+        (reportln)
+        (doseq [v (sort-by :name vars)]
+          (let [v-to-vs-str (str (:name v))]
+            (report (indt) v-to-vs-str (pad v-to-vs-str) "(" (count (:vars-in v)) " references) " version))
+          (if (store-var-references v)
+            (reportln " Ok")
+            (reportln " Error")))
+        (reportln)
+        (reportln (indt) "Looking for vars to remove...")
+        (if (= 0 num-vars)
+          (reportln (indt) "No vars found, skipping removal of stale vars.")
+          (let [removed (remove-stale-vars (:name library) version start)]
+            (if (= 0 (count removed))
+              (reportln (indt 2) "No vars removed.")
+              (do
+                (reportln (indt 2) "Removed " (count removed) " vars:")
+                (doseq [vr removed]
+                  (reportln (indt 4) (:name vr) (pad (:name vr)) "(" (:ns vr) ")"))))))
+        (reportln "=========================================")
+        (reportln (indt) num-projects " projects, " num-nss " namespaces, " num-vars " vars found in " (:name library) " " version)
+        ))))
 
 (defn run-update [root-dir]
   (report-on-lib (parse-library (File. root-dir))))
@@ -205,6 +204,7 @@
 (defn run-update-clojure-contrib [root-dir]
   (report-on-lib (parse-clojure-contrib (File. root-dir))))
 
-(run-update-clojure-core "/Users/zkim/clojurelibs/clojure" "1.3.0-alpha1")
+#_(run-update-clojure-core "/Users/zkim/clojurelibs/clojure" (clojure-version))
 #_(run-update-clojure-contrib "/Users/zkim/clojurelibs/clojure-contrib")
 #_(pprint (parse-clojure-core (File. "/Users/zkim/clojurelibs/clojure")))
+
