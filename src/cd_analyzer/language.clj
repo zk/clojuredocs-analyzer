@@ -1,8 +1,8 @@
 (ns cd-analyzer.language
-  (:use [clojure.contrib.pprint]
+  (:use [clojure.pprint :only (pprint)]
 	[clojure.repl :only (source-fn)]
 	[clojure.string :only (split-lines trim)])
-  (:import [clojure.lang LineNumberingPushbackReader]
+  (:import [clojure.lang LineNumberingPushbackReader Namespace]
 	   [java.io File FileReader StringReader]))
 
 (defn mkfile [& parts]

@@ -2,9 +2,8 @@
   (:use [cd-analyzer.util]
 	[cd-analyzer.language]
 	[cd-analyzer.core]
-	[clojure.contrib.pprint]
-	[clojure.java.shell]
-	[clojure.contrib.except :only (throwf)]))
+        [clojure.pprint :only (pprint)]
+	[clojure.java.shell]))
 
 
 (defn clone-target-repo [git-url download-to-dir]
@@ -43,7 +42,7 @@
 
 (defn run-update-for [git-url]
   (let [start (System/currentTimeMillis)]
-    #_ (when (not (.exists (java.io.File. proj-root))) (throwf "Couldn't find project root: %s" proj-root))
+    #_ (when (not (.exists (java.io.File. proj-root))) (throw (Exception. "Couldn't find project root: %s") proj-root))
     (reportln (str "Running update for " git-url " on " (java.util.Date.)))
     (reportln "-----------------------------------------")
     (with-temp-dir tmp-dir

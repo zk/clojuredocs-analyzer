@@ -2,7 +2,7 @@
   (:use [hiccup.core]
 	[cd-analyzer.core]
 	[clojure.contrib.sql]
-	[clojure.contrib.pprint])
+	[clojure.pprint :only (pprint)])
   (:require [clojure.zip :as zip]))
 
 (declare db)
