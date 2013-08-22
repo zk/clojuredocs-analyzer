@@ -1,6 +1,6 @@
 (defproject cd-analyzer "0.1.0-SNAPSHOT"
   :description "FIXME: write"
-  :dependencies [[org.clojure/clojure "1.3.0"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/java.jdbc "0.0.6"]
 		 [mysql/mysql-connector-java "5.1.12"]
 		 [org.slf4j/slf4j-api "1.6.1"]
