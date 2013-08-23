@@ -1,8 +1,7 @@
 (ns cd-analyzer.database
   (:use [cd-analyzer.util] 
 	[cd-analyzer.language]
-	[clojure.pprint :only (pprint)]
-        [clojure.contrib.string :only (as-str)])
+	[clojure.pprint :only (pprint)])
   (:require [clojure.java.jdbc :as jdbc]
             [clojure.string :as str])
   (:import [java.io File]))
@@ -40,8 +39,8 @@ string, which looks nasty when you display it."
    a record into an sql insert statement compatible with prepareStatement
     Returns [sql values-to-insert]"
   [table record]
-  (let [table-name (as-str table)
-        columns (map as-str (keys record))
+  (let [table-name (name table)
+        columns (map name (keys record))
         values (vals record)
         n (count columns)
         template (join "," (replicate n "?"))
@@ -349,7 +348,7 @@ string, which looks nasty when you display it."
     (jdbc/transaction
      (jdbc/insert-record :library_import_logs
 		    {:library_import_task_id task-id
-		     :level (as-str level)
+		     :level (name level)
 		     :message message
 		     :created_at (java.sql.Timestamp. (System/currentTimeMillis))}))))
 
